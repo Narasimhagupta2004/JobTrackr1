@@ -20,7 +20,8 @@ import {
   Timer,
   CheckCircle
 } from '@mui/icons-material';
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import { forgotPassword, verifyOtp } from '../api/authApi';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -69,15 +70,27 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', {
-        email: formData.email
-      });
-      setMessage('New verification code sent to your email');
+      await forgotPassword(formData.email);
+      const successMessage = 'New verification code sent to your email';
+      setMessage(successMessage);
       setTimeLeft(600); // Reset timer
       setCanResend(false);
       setError('');
+      
+      // Show success toast
+      toast.info('📧 New verification code sent to your email', {
+        position: "top-right",
+        autoClose: 4000,
+      });
     } catch (err) {
-      setError(err.response?.data?.msg || 'Failed to resend OTP');
+      const errorMessage = err.response?.data?.msg || 'Failed to resend OTP';
+      setError(errorMessage);
+      
+      // Show error toast
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 4000,
+      });
     } finally {
       setLoading(false);
     }
@@ -120,19 +133,38 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/reset-password', {
+      const res = await verifyOtp({
         email: formData.email.trim(),
         otp: formData.otp.trim(),
         newPassword: formData.newPassword
       });
       
-      setMessage(res.data.msg);
+      const successMessage = res.data.msg || 'Password reset successful!';
+      setMessage(successMessage);
+      
+      // Show success toast
+      toast.success('🎉 Password reset successful! You can now login with your new password.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
       // Navigate to login after successful reset
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.msg || 'Failed to reset password');
+      const errorMessage = err.response?.data?.msg || 'Failed to reset password';
+      setError(errorMessage);
+      
+      // Show error toast
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 4000,
+      });
     } finally {
       setLoading(false);
     }

@@ -11,7 +11,8 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Email, ArrowBack } from '@mui/icons-material';
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import { forgotPassword } from '../api/authApi';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -27,17 +28,34 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/forgot-password', {
-        email: email.trim()
+      const res = await forgotPassword(email.trim());
+      
+      const successMessage = res.data.msg || 'OTP sent to your email. Valid for 10 minutes.';
+      setMessage(successMessage);
+      
+      // Show success toast
+      toast.info('📧 OTP sent to your email. Valid for 10 minutes.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       });
       
-      setMessage(res.data.msg);
       // Navigate to reset password page after 2 seconds
       setTimeout(() => {
         navigate('/reset-password', { state: { email: email.trim() } });
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.msg || 'Failed to send reset email');
+      const errorMessage = err.response?.data?.msg || 'Failed to send reset email';
+      setError(errorMessage);
+      
+      // Show error toast
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 4000,
+      });
     } finally {
       setLoading(false);
     }
