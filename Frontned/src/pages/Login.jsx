@@ -143,7 +143,23 @@ const Login = () => {
           </Button>
         </Box>
 
-        <Typography sx={{ mt: 3, color: '#eee' }}>
+        {/* Forgot Password Link */}
+        <Typography sx={{ mt: 2, color: '#eee' }}>
+          <Link
+            onClick={() => navigate('/forgot-password')}
+            underline="hover"
+            sx={{ 
+              color: '#ff8a00', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              '&:hover': { color: '#e52e71' }
+            }}
+          >
+            Forgot your password?
+          </Link>
+        </Typography>
+
+        <Typography sx={{ mt: 2, color: '#eee' }}>
           Don't have an account?{' '}
           <Link
             href="/register"
