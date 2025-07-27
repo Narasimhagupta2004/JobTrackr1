@@ -1,0 +1,45 @@
+[dotenv@17.2.0] injecting env (4) from .env (tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild)
+[dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  enable debug logging with { debug: true })
+Uploads folder exists at: /workspace/JobTrackr1/Backend/uploads
+MongoDB connected
+Server running on port 5000
+Email attempt 1 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials e9e14a558f8ab-3e3cab1ee66sm17139205ab.26 - gsmtp
+Email attempt 2 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ca18e2360f4ac-880f7a2a8c9sm112651839f.21 - gsmtp
+Email attempt 3 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91eccc6sm1275677173.26 - gsmtp
+Failed to send welcome email: Failed to send email after 3 attempts: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91eccc6sm1275677173.26 - gsmtp
+Email attempt 1 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials e9e14a558f8ab-3e3cab1a055sm16884305ab.21 - gsmtp
+Email attempt 2 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials e9e14a558f8ab-3e3cc9f6cfesm15002395ab.7 - gsmtp
+Email attempt 3 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91cb675sm1210676173.19 - gsmtp
+Failed to send OTP email: Failed to send email after 3 attempts: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91cb675sm1210676173.19 - gsmtp
+Email attempt 1 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ca18e2360f4ac-880f7a6bdf7sm114685139f.36 - gsmtp
+Email attempt 2 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91cb681sm1210229173.13 - gsmtp
+Email attempt 3 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91edeb1sm1241117173.35 - gsmtp
+Failed to send welcome email: Failed to send email after 3 attempts: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c91edeb1sm1241117173.35 - gsmtp
+Email attempt 1 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c9343744sm1207882173.58 - gsmtp
+Email attempt 2 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c937ff00sm1255070173.102 - gsmtp
+Email attempt 3 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ca18e2360f4ac-880f77d1626sm115785839f.0 - gsmtp
+Failed to send welcome email: Failed to send email after 3 attempts: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ca18e2360f4ac-880f77d1626sm115785839f.0 - gsmtp
+Email attempt 1 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c93aac88sm1259492173.107 - gsmtp
+Email attempt 2 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 8926c6da1cb9f-508c93b04bdsm1242796173.121 - gsmtp
+Email attempt 3 failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials e9e14a558f8ab-3e3cacde3bfsm17166885ab.53 - gsmtp
+Failed to send OTP email: Failed to send email after 3 attempts: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials e9e14a558f8ab-3e3cacde3bfsm17166885ab.53 - gsmtp
