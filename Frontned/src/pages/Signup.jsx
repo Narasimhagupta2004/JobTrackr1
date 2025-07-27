@@ -6,37 +6,81 @@ import {
   Button,
   Box,
   Alert,
-  Link
+  Link,
+  InputAdornment,
+  IconButton
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Visibility, VisibilityOff, PersonAdd } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { signup } from '../api/authApi';
+import FormInput from '../components/FormInput';
 
-const Register = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = e => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setError(''); // Clear error when user types
+  };
+
+  const validateForm = () => {
+    if (!form.name.trim()) {
+      setError('Full name is required');
+      return false;
+    }
+    if (!form.email.trim()) {
+      setError('Email is required');
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(form.email)) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+    if (!form.password) {
+      setError('Password is required');
+      return false;
+    }
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return false;
+    }
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match');
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+
+    if (!validateForm()) return;
+
     setLoading(true);
 
     try {
-      const res = await signup(form);
+      const res = await signup({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        password: form.password
+      });
+      
       localStorage.setItem('token', res.data.token);
       
       // Show success message with welcome email confirmation
-      toast.success('Account created successfully! 🎉 A welcome email has been sent to your inbox.', {
+      toast.success('🎉 Account created successfully! A welcome email has been sent to your inbox.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -86,14 +130,28 @@ const Register = () => {
           textAlign: 'center',
         }}
       >
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+          <PersonAdd sx={{ fontSize: 60, color: '#ff8a00' }} />
+        </Box>
+
         <Typography variant="h3" fontWeight="bold" mb={3} sx={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
           Join JobTrackr
+        </Typography>
+
+        <Typography variant="body1" sx={{ mb: 3, color: '#e0e0e0', lineHeight: 1.6 }}>
+          Create your account and start tracking your job applications with ease.
         </Typography>
 
         {error && (
           <Alert
             severity="error"
-            sx={{ mb: 2, backdropFilter: 'blur(8px)', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff' }}
+            sx={{ 
+              mb: 2, 
+              backdropFilter: 'blur(8px)', 
+              backgroundColor: 'rgba(244, 67, 54, 0.2)', 
+              color: '#fff',
+              '& .MuiAlert-icon': { color: '#ff6b6b' }
+            }}
           >
             {error}
           </Alert>
@@ -109,6 +167,7 @@ const Register = () => {
             onChange={handleChange}
             variant="filled"
             margin="normal"
+            disabled={loading}
             InputLabelProps={{ style: { color: '#e0e0e0' } }}
             InputProps={{
               style: { color: '#fff' },
@@ -118,6 +177,7 @@ const Register = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.25)' },
                 '&.Mui-focused': { backgroundColor: 'rgba(255, 255, 255, 0.35)' },
+                '&.Mui-disabled': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
               },
             }}
           />
@@ -132,6 +192,7 @@ const Register = () => {
             onChange={handleChange}
             variant="filled"
             margin="normal"
+            disabled={loading}
             InputLabelProps={{ style: { color: '#e0e0e0' } }}
             InputProps={{
               style: { color: '#fff' },
@@ -141,6 +202,7 @@ const Register = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.25)' },
                 '&.Mui-focused': { backgroundColor: 'rgba(255, 255, 255, 0.35)' },
+                '&.Mui-disabled': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
               },
             }}
           />
@@ -150,20 +212,69 @@ const Register = () => {
             required
             label="Password"
             name="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={form.password}
             onChange={handleChange}
             variant="filled"
             margin="normal"
+            disabled={loading}
             InputLabelProps={{ style: { color: '#e0e0e0' } }}
             InputProps={{
               style: { color: '#fff' },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    sx={{ color: '#e0e0e0' }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
             sx={{
               '& .MuiFilledInput-root': {
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.25)' },
                 '&.Mui-focused': { backgroundColor: 'rgba(255, 255, 255, 0.35)' },
+                '&.Mui-disabled': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              },
+            }}
+          />
+
+          <TextField
+            fullWidth
+            required
+            label="Confirm Password"
+            name="confirmPassword"
+            type={showConfirmPassword ? 'text' : 'password'}
+            value={form.confirmPassword}
+            onChange={handleChange}
+            variant="filled"
+            margin="normal"
+            disabled={loading}
+            InputLabelProps={{ style: { color: '#e0e0e0' } }}
+            InputProps={{
+              style: { color: '#fff' },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    edge="end"
+                    sx={{ color: '#e0e0e0' }}
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              '& .MuiFilledInput-root': {
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.25)' },
+                '&.Mui-focused': { backgroundColor: 'rgba(255, 255, 255, 0.35)' },
+                '&.Mui-disabled': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
               },
             }}
           />
@@ -199,9 +310,14 @@ const Register = () => {
         <Typography sx={{ mt: 3, color: '#eee' }}>
           Already have an account?{' '}
           <Link
-            href="/login"
+            onClick={() => navigate('/login')}
             underline="hover"
-            sx={{ color: '#ff8a00', fontWeight: 'bold', cursor: 'pointer' }}
+            sx={{ 
+              color: '#ff8a00', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              '&:hover': { color: '#e52e71' }
+            }}
           >
             Log In
           </Link>
@@ -211,4 +327,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signup;

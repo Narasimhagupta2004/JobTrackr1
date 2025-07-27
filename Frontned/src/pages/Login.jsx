@@ -9,7 +9,8 @@ import {
   Link
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import { login } from '../api/authApi';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = e => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -26,13 +28,30 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await login(form);
       localStorage.setItem('token', res.data.token);
+      
+      // Show success toast
+      toast.success('Welcome back! Login successful.', {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.msg || 'Login failed');
+      const errorMessage = err.response?.data?.msg || 'Login failed';
+      setError(errorMessage);
+      
+      // Show error toast
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 4000,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,6 +144,7 @@ const Login = () => {
             fullWidth
             variant="contained"
             size="large"
+            disabled={loading}
             sx={{
               mt: 3,
               background:
@@ -137,20 +157,45 @@ const Login = () => {
                   'linear-gradient(90deg, #e52e71 0%, #ff8a00 100%)',
                 boxShadow: '0 6px 20px rgba(255, 138, 0, 0.7)',
               },
+              '&:disabled': {
+                background: 'rgba(255, 255, 255, 0.3)',
+                color: 'rgba(255, 255, 255, 0.7)',
+              },
             }}
           >
-            Log In
+            {loading ? 'Logging in...' : 'Log In'}
           </Button>
         </Box>
 
-        <Typography sx={{ mt: 3, color: '#eee' }}>
+        {/* Forgot Password Link */}
+        <Typography sx={{ mt: 2, color: '#eee' }}>
+          <Link
+            onClick={() => navigate('/forgot-password')}
+            underline="hover"
+            sx={{ 
+              color: '#ff8a00', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              '&:hover': { color: '#e52e71' }
+            }}
+          >
+            Forgot your password?
+          </Link>
+        </Typography>
+
+        <Typography sx={{ mt: 2, color: '#eee' }}>
           Don't have an account?{' '}
           <Link
-            href="/register"
+            onClick={() => navigate('/signup')}
             underline="hover"
-            sx={{ color: '#ff8a00', fontWeight: 'bold', cursor: 'pointer' }}
+            sx={{ 
+              color: '#ff8a00', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              '&:hover': { color: '#e52e71' }
+            }}
           >
-            Register here
+            Sign up here
           </Link>
         </Typography>
       </Container>
