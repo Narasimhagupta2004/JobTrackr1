@@ -1,12 +1,17 @@
 const express = require('express');
-const { register, login } = require('../controllers/authController');
+const { register, login, forgotPassword, verifyOTPAndResetPassword } = require('../controllers/authController');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
+const { validateRegistration, validateLogin, validateForgotPassword, validateResetPassword } = require('../middleware/validationMiddleware');
 const User = require('../models/User');
 
-// Existing routes like register, login ...
-router.post('/register', register);
-router.post('/login', login);
+// Authentication routes
+router.post('/register', validateRegistration, register);
+router.post('/login', validateLogin, login);
+
+// Password reset routes
+router.post('/forgot-password', validateForgotPassword, forgotPassword);
+router.post('/reset-password', validateResetPassword, verifyOTPAndResetPassword);
 
 // Profile route
 router.get('/profile', authMiddleware, async (req, res) => {
