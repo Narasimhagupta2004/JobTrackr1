@@ -75,3 +75,17 @@ exports.validateResetPassword = (req, res, next) => {
 
   next();
 };
+
+exports.validateChangePassword = (req, res, next) => {
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword) {
+    return res.status(400).json({ msg: 'Current password is required' });
+  }
+
+  if (!newPassword || !validatePassword(newPassword)) {
+    return res.status(400).json({ msg: 'New password must be at least 6 characters long' });
+  }
+
+  next();
+}

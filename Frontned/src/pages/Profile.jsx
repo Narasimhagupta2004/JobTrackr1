@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({ name: 'User', email: '' });
 
   useEffect(() => {
@@ -31,6 +33,22 @@ const Profile = () => {
         <Typography variant="subtitle1" color="text.secondary">
           Email: {user.email}
         </Typography>
+      </Box>
+      <Box display="flex" justifyContent="center" mt={3}>
+        <button
+          style={{
+            padding: '8px 20px',
+            background: '#1976d2',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+          }}
+          onClick={() => navigate('/change-password')}
+        >
+          Change Password
+        </button>
       </Box>
     </Container>
   );

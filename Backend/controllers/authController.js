@@ -117,3 +117,23 @@ exports.verifyOTPAndResetPassword = async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 };
+
+exports.changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(400).json({ msg: 'Current password is incorrect' });
+
+    // Hash the new password before saving
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    res.json({ msg: 'Password changed successfully' });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+}

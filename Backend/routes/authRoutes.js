@@ -1,8 +1,8 @@
 const express = require('express');
-const { register, login, forgotPassword, verifyOTPAndResetPassword } = require('../controllers/authController');
+const { register, login, forgotPassword, verifyOTPAndResetPassword, changePassword } = require('../controllers/authController');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
-const { validateRegistration, validateLogin, validateForgotPassword, validateResetPassword } = require('../middleware/validationMiddleware');
+const { validateRegistration, validateLogin, validateForgotPassword, validateResetPassword, validateChangePassword } = require('../middleware/validationMiddleware');
 const User = require('../models/User');
 
 // Authentication routes
@@ -12,7 +12,7 @@ router.post('/login', validateLogin, login);
 // Password reset routes
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
 router.post('/reset-password', validateResetPassword, verifyOTPAndResetPassword);
-
+router.post('/change-password', authMiddleware, validateChangePassword, changePassword);
 // Profile route
 router.get('/profile', authMiddleware, async (req, res) => {
   try {

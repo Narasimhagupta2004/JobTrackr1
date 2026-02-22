@@ -34,7 +34,7 @@ const ForgotPassword = () => {
       setMessage(successMessage);
       
       // Show success toast
-      toast.info('📧 OTP sent to your email. Valid for 10 minutes.', {
+      toast.info(' OTP sent to your email. Valid for 10 minutes.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

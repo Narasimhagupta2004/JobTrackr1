@@ -12,10 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve uploads folder statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
 const jobRoutes = require('./routes/jobRoutes');
 const authRoutes = require('./routes/authRoutes');
 
