@@ -21,6 +21,7 @@ import {
   AccountCircle as AccountCircleIcon,
   Logout as LogoutIcon,
   Menu as MenuIcon,
+  Lightbulb as LightbulbIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -63,8 +64,9 @@ const Navbar = ({ children }) => {
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
     { text: 'Add Job', icon: <AddIcon />, path: '/add-job' },
-    { text: 'Job List', icon: <ListAltIcon />, path: '/jobs' }, // Optional
-    { text: 'Profile', icon: <AccountCircleIcon />, path: '/profile' }, // Optional
+    { text: 'Job List', icon: <ListAltIcon />, path: '/jobs' },
+    { text: 'Recommendations', icon: <LightbulbIcon />, path: '/recommendations' },
+    { text: 'Profile', icon: <AccountCircleIcon />, path: '/profile' },
   ];
 
   // If user is not logged in, render only children (or redirect in routes)

@@ -49,7 +49,10 @@ This backend implements the API for JobTrackr, a personal job application tracke
 - `PUT /api/jobs/:id` — update a job entry
 - `DELETE /api/jobs/:id` — delete a job entry
 
-> All `/api/jobs` routes require a valid `Authorization: Bearer <token>` header.
+### Recommendations
+- `POST /api/recommendations` — generate a ranked shortlist for the authenticated user's saved jobs based on a profile or resume summary
+
+> All `/api/jobs` and `/api/recommendations` routes require a valid `Authorization: Bearer <token>` header.
 
 ## Data Models
 ### User
@@ -74,6 +77,7 @@ This backend implements the API for JobTrackr, a personal job application tracke
 Copy `.env.example` to `.env` and configure the following values:
 - `MONGO_URI` — MongoDB connection string
 - `JWT_SECRET` — secret used for signing JWT tokens
+- `OPENAI_API_KEY` — OpenAI API key for job shortlist recommendations
 - `EMAIL_USER` — Gmail sender email
 - `EMAIL_PASS` — Gmail app password or SMTP password
 

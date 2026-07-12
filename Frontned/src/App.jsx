@@ -12,6 +12,7 @@ import Navbar from './components/Navbar';
 import JobList from './pages/JobList';
 import EditJob from './pages/EditJob';
 import Profile from './pages/Profile';
+import Recommendation from './pages/Recommendation';
 import EmailTestDemo from './components/EmailTestDemo';
 import ProtectedRoute from './components/ProtectedRoute';
 import ChangePassword from './pages/Change-Password';
@@ -57,7 +58,12 @@ function App() {
           <ProtectedRoute>
             <ChangePassword />
           </ProtectedRoute>
-        } />wh
+        } />
+        <Route path="/recommendations" element={
+          <ProtectedRoute>
+            <Recommendation />
+          </ProtectedRoute>
+        } />
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
       </Navbar>

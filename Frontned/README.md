@@ -35,6 +35,7 @@ This front-end is a React + Vite application for JobTrackr. It provides user aut
     - `EditJob.jsx` — edit existing job entry
     - `Profile.jsx` — show user profile information
     - `Change-Password.jsx` — update current password
+    - `Recommendation.jsx` — AI-powered shortlist for saved jobs
   - `assets/` — static assets used by the app
   - `App.css`, `index.css` — global styles
 
@@ -51,6 +52,7 @@ This front-end is a React + Vite application for JobTrackr. It provides user aut
 - `/add-job` — protected create job page
 - `/edit-job/:id` — protected edit job page
 - `/change-password` — protected change-password page
+- `/recommendations` — protected AI job shortlist page
 
 ## Backend Integration
 The frontend uses `axios` and `authApi.js` to communicate with backend endpoints:
@@ -60,6 +62,7 @@ The frontend uses `axios` and `authApi.js` to communicate with backend endpoints
 - `POST /api/auth/reset-password`
 - `GET /api/auth/profile`
 - `POST /api/auth/change-password`
+- `POST /api/recommendations` — recommend ranked jobs using OpenAI embeddings and profile text
 
 Protected pages require a JWT token stored in `localStorage` and sent in the `Authorization: Bearer <token>` header.
 
